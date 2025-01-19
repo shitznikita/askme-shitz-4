@@ -1,0 +1,31 @@
+{% load static %}
+<div class="card w-100" style="width: 18rem;">
+  <div class="card-body">
+      <div class="row">
+          <div class="col-2 d-flex flex-column gap-2 align-items-center">
+              {% if question.author.profile.avatar %}
+                  <img src="{{ question.author.profile.avatar.url }}" alt="Avatar" style="width: 100px; height: 100px; object-fit: cover;">
+              {% else %}
+                  <img src="{% static 'img/Heisenberg.jpeg' %}" alt="Default Avatar" style="width: 100px; height: 100px; object-fit: cover;">
+              {% endif %}
+              <span id="rating-value">★{{ question.rating }}</span>
+          </div>
+          <div class="col d-flex flex-column gap-2">
+              <h5 class="card-title"><a href="{% url 'one_question' question.id %}">{{ question.title }}</a></h5>
+              <p class="card-text">{{ question.content }}</p>
+              <div class="d-flex gap-3 mt-auto">
+                  <a href="{% url 'one_question' question.id %}" class="card-link">Answer ({{ question.answers.count }})</a>
+                  <div class="d-flex gap-2">
+                      Tags:
+                      {% for tag in question.tags.all %}
+                          <a href="{% url 'tag' tag.name %}" class="badge bg-primary">{{ tag.name }}</a>
+                      {% endfor %}
+                  </div>
+              </div>
+              <div class="mt-auto">
+                  <button id="like-btn" class="btn btn-success btn-sm">👍</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

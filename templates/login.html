@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block header %}
+    <h1>Log In</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form class="d-flex flex-column gap-3" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Log in!</button>
+            {% endbuttons %}
+
+            <a href="{% url 'signup' %}">create new account</a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+    {% include 'layouts/question.html' with question=item %}
+
+    <hr class="my-4 border-3">
+
+    <div class="answer-cards d-flex flex-column gap-3">
+        {% for answer in answers %}
+            {% include 'layouts/answer.html' %}
+        {% endfor %}
+
+        <form class="d-flex flex-column gap-3" method="POST" action="{% url 'one_question' item.id %}">
+            {% csrf_token %}
+
+            {% bootstrap_form form %}
+
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Answer!</button>
+            {% endbuttons %}
+        </form>
+    </div>
+
+    {% include 'layouts/pagination.html' %}
+{% endblock %}

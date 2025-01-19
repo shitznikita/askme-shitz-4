@@ -1,0 +1,21 @@
+{% load static %}
+<div class="card w-100" style="width: 18rem;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-2 d-flex flex-column gap-2 align-items-center">
+              {% if answer.author.profile.avatar %}
+                  <img src="{{ answer.author.profile.avatar.url }}" alt="Avatar" style="width: 100px; height: 100px; object-fit: cover;">
+              {% else %}
+                  <img src="{% static 'img/Heisenberg.jpeg' %}" alt="Default Avatar" style="width: 100px; height: 100px; object-fit: cover;">
+              {% endif %}
+              <span id="rating-value">★{{ answer.rating }}</span>
+            </div>
+            <div class="col-10 d-flex flex-column gap-2">
+                <p class="card-text">{{ answer.content }}</p>
+                <div class="mt-auto">
+                    <button id="like" class="btn btn-success btn-sm">👍</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

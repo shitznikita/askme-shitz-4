@@ -1,0 +1,90 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AskMe</title>
+    <link rel="stylesheet" href="./../static/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <div class="d-flex">
+                <a class="navbar-brand" href="{% url 'index' %}">AskMe</a>
+                <a href="{% url 'ask' %}" class="btn btn-outline-success">Ask!</a>
+            </div>
+
+            <form role="search">
+                <input class="form-control me-5" type="search" placeholder="Search" aria-label="Search">
+            </form>
+            {% if request.user.is_authenticated %}
+                <div class="d-flex gap-2">
+                    {% if request.user.profile.avatar %}
+                      <img src="{{ request.user.profile.avatar.url }}" alt="Avatar" style="width: 50px; height: 50px; object-fit: cover;">
+                    {% else %}
+                      <img src="{% static 'img/Heisenberg.jpeg' %}" alt="Default Avatar" style="width: 50px; height: 50px; object-fit: cover;">
+                    {% endif %}
+                    <div class="main-avatar-img">
+                        <div>{{ request.user.username }}</div>
+                        <div class="d-flex gap-3">
+                            <a href="{% url 'settings' %}">Settings</a>
+                            <a href="{% url 'logout' %}">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="d-flex gap-3">
+                    <a href="{% url 'login' %}">Log In</a>
+                    <a href="{% url 'signup' %}">Register</a>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="container-fluid mt-3">
+        <div class="d-flex gap-3 align-items-center">
+            {% block header %}
+            {% endblock %}
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+            <div class="col-4">
+                <div class="d-flex flex-column gap-3">
+                    <div>
+                        <h2>Popular Tags</h2>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="#" class="badge bg-primary text-decoration-none">HTML</a></li>
+                            <li class="list-inline-item"><a href="#" class="badge bg-secondary text-decoration-none">CSS</a></li>
+                            <li class="list-inline-item"><a href="#" class="badge bg-success text-decoration-none">JavaScript</a></li>
+                            <li class="list-inline-item"><a href="#" class="badge bg-danger text-decoration-none">Python</a></li>
+                            <li class="list-inline-item"><a href="#" class="badge bg-warning text-decoration-none">React</a></li>
+                            <li class="list-inline-item"><a href="#" class="badge bg-info text-decoration-none">Vue.js</a></li>
+                            <li class="list-inline-item"><a href="#" class="badge bg-dark text-decoration-none">Node.js</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h2>Best Members</h2>
+                        <ul style="list-style-type: none; padding: 0;" class="d-flex flex-column gap-1">
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#">Member</a></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#">Member</a></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#">Member</a></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#">Member</a></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><a href="#">Member</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./../static/js/bootstrap.js"></script>
+</body>
+</html>
