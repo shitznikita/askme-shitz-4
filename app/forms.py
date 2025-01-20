@@ -30,6 +30,15 @@ class QuestionForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'placeholder': 'Question text'}),
         }
 
+    def clean_tags(self):
+        tags_input = self.cleaned_data['tags']
+        tag_names = [name.strip() for name in tags_input.split(',') if name.strip()]
+
+        if len(tag_names) > 3:
+            raise forms.ValidationError("You can add up to 3 tags only.")
+
+        return tags_input
+
     def save(self, commit=True, **kwargs):
         author = kwargs.get('author')
         question = super().save(commit=False)
